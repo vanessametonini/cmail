@@ -23,7 +23,10 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.css",
+              "src/assets/css/globalFab.css",
+              "src/assets/css/tooltip.css",
+              "src/assets/css/newEmail.css"
             ],
             "scripts": []
           },
