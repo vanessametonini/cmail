@@ -9,5 +9,14 @@ import { Component } from "@angular/core";
     ]
 })
 export class HeaderComponent {
+    private _isMenuOpen = false
+
+    get isMenuOpen() {
+        return this._isMenuOpen
+    }
+
+    toggleMenu() {
+        this._isMenuOpen = !this.isMenuOpen
+    }
 
 } 
