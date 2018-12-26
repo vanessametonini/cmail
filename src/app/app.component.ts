@@ -7,7 +7,8 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
 
-  private isNewEmailFormOpen = false;
+  private _isNewEmailFormOpen = false;
+
   emailList = [];
   email = {
     destinatario: '',
@@ -15,8 +16,12 @@ export class AppComponent {
     conteudo: ''
   }
 
+  get isNewEmailFormOpen(){
+    return this._isNewEmailFormOpen;
+  }
+
   toggleNewEmailForm() {
-    this.isNewEmailFormOpen = !this.isNewEmailFormOpen
+    this._isNewEmailFormOpen = !this.isNewEmailFormOpen
   }
 
   handleNewEmail(event: Event) {
