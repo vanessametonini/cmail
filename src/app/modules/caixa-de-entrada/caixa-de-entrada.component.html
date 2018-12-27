@@ -14,13 +14,14 @@
 
       <div class="mdl-grid">
         <!-- Floating Multiline Textfield -->
-        <button class="globalFab tooltip btn mdl-button mdl-js-button mdl-button--fab mdl-button--colored"
-          role="tooltip" aria-label="Criar novo email" (click)="toggleNewEmailForm()">
+        <button class="globalFab tooltip btn mdl-button mdl-js-button mdl-button--fab mdl-button--colored" role="tooltip"
+          aria-label="Criar novo email" (click)="toggleNewEmailForm()">
           <span class="material-icons">add</span>
         </button>
 
         <!-- newEmail--active -->
-        <form class="newEmail cmailForm" [ngClass]="{ 'newEmail--active': isNewEmailFormOpen }" #formEmail="ngForm" (ngSubmit)="handleNewEmail(formEmail)">
+        <form class="newEmail cmailForm" [ngClass]="{ 'newEmail--active': isNewEmailFormOpen }" #formEmail="ngForm"
+          (ngSubmit)="handleNewEmail(formEmail)">
 
           <div class="newEmail__card demo-card-wide mdl-card mdl-shadow--2dp">
             <div class="newEmail__titleArea mdl-card__title">
@@ -30,13 +31,9 @@
               <!-- Form Fields -->
               <!-- [Para] -->
               <div class="cmailInputForm">
-                <div class="mdl-textfield mdl-textfield--floating-label"
-                [ngClass]="{'is-invalid': destinatario.invalid && destinatario.touched}"
-                >
-                  <input
-                  #destinatario="ngModel"
-                  [(ngModel)]="email.destinatario"
-                  required type="email" name="para" id="para" class="mdl-textfield__input">
+                <div class="mdl-textfield mdl-textfield--floating-label" [ngClass]="{'is-invalid': destinatario.invalid && destinatario.touched}">
+                  <input #destinatario="ngModel" [(ngModel)]="email.destinatario" required type="email" name="para" id="para"
+                    class="mdl-textfield__input">
                   <span class="mdl-textfield__error">Informar um email é obrigatório!</span>
                   <label class="mdl-textfield__label" for="para">Para: </label>
                   <span class="mdl-textfield__formline"></span>
@@ -45,13 +42,9 @@
 
               <!-- [Assunto] -->
               <div class="cmailInputForm">
-                <div class="mdl-textfield mdl-textfield--floating-label"
-                [ngClass]="{'is-invalid': assunto.invalid && assunto.touched}"
-                >
-                  <input
-                  #assunto="ngModel"
-                  [(ngModel)]="email.assunto"
-                  required type="assunto" name="assunto" id="assunto" class="mdl-textfield__input">
+                <div class="mdl-textfield mdl-textfield--floating-label" [ngClass]="{'is-invalid': assunto.invalid && assunto.touched}">
+                  <input #assunto="ngModel" [(ngModel)]="email.assunto" required type="assunto" name="assunto" id="assunto"
+                    class="mdl-textfield__input">
                   <span class="mdl-textfield__error">Informar um assunto é obrigatório!</span>
                   <label class="mdl-textfield__label" for="email"> Assunto: </label>
                   <span class="mdl-textfield__formline"></span>
@@ -61,10 +54,8 @@
               <!-- [Conteúdo] -->
               <div class="cmailInputForm">
                 <div class="mdl-textfield mdl-textfield--floating-label">
-                  <textarea
-                  #conteudo="ngModel"
-                  [(ngModel)]="email.conteudo" name="conteudo"
-                  class="mdl-textfield__input" id="conteudo"></textarea>
+                  <textarea #conteudo="ngModel" [(ngModel)]="email.conteudo" name="conteudo" class="mdl-textfield__input"
+                    id="conteudo"></textarea>
                   <span class="mdl-textfield__error">Informar um conteúdo é obrigatório!</span>
                   <label class="mdl-textfield__label" for="conteudo">Conteúdo: </label>
                   <span class="mdl-textfield__formline"></span>
@@ -79,7 +70,7 @@
               </button>
             </div>
             <div class="newEmail__topMenu mdl-card__menu">
-              <button type="button" class="mdl-button mdl-button--icon"  (click)="toggleNewEmailForm()">
+              <button type="button" class="mdl-button mdl-button--icon" (click)="toggleNewEmailForm()">
                 <span class="material-icons">close</span>
               </button>
             </div>
