@@ -31,6 +31,9 @@
               "src/assets"
             ],
             "styles": [
+              "src/assets/css/material-icons.css",
+              "src/assets/css/roboto.css",
+              "src/assets/css/material.indigo-red.min.css",
               "src/styles.css",
               "src/assets/css/globalFab.css",
               "src/assets/css/tooltip.css",
