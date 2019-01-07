@@ -1,7 +1,7 @@
 import { Directive, ElementRef, OnInit } from '@angular/core';
 
 @Directive({
-  selector: '[cmailFormField]'
+  selector: '[cmailFormField]',
 })
 export class CmailFormFieldDirective implements OnInit {
 
@@ -9,11 +9,15 @@ export class CmailFormFieldDirective implements OnInit {
 
   ngOnInit() {
     const campo = this.campo.nativeElement;
-    const placeholder = campo.id.replace(campo.id[0], campo.id[0].toUpperCase());
 
-    campo.setAttribute('name', campo.id);
-    campo.setAttribute('placeholder', placeholder);
-    campo.classList.add('mdl-textfield__input');
+    if(campo.name) {
+      campo.id = campo.name;
+      campo.setAttribute('placeholder', ' ');
+      campo.classList.add('mdl-textfield__input');
+    }
+    else {
+      throw new Error("Atributo 'name' é obrigatório")
+    }
 
   }
 
