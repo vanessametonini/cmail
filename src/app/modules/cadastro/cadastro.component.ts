@@ -10,19 +10,17 @@ import { map, catchError } from "rxjs/operators";
 })
 export class CadastroComponent implements OnInit {
 
-  formCadastro: FormGroup;
+  formCadastro = new FormGroup({
+    nome: new FormControl('', [Validators.required, Validators.minLength(3)]),
+    username: new FormControl('', [Validators.required]),
+    senha: new FormControl('', [Validators.required]),
+    telefone: new FormControl('', [Validators.required, Validators.pattern('[0-9]{4}-?[0-9]{4}[0-9]?')]),
+    avatar: new FormControl('', [Validators.required], this.validaImagem.bind(this))
+  })
 
   constructor(private httpClient: HttpClient) { }
 
-  ngOnInit() {
-    this.formCadastro = new FormGroup({
-      nome: new FormControl('', [Validators.required, Validators.minLength(3)]),
-      username: new FormControl('', [Validators.required]),
-      senha: new FormControl('', [Validators.required]),
-      telefone: new FormControl('', [Validators.required, Validators.pattern('[0-9]{4}-?[0-9]{4}[0-9]?')]),
-      avatar: new FormControl('',[Validators.required], this.validaImagem.bind(this))
-    })
-  }
+  ngOnInit() {}
 
   validaImagem(campoDoFormulario: FormControl) {
     return this.httpClient
@@ -76,11 +74,9 @@ export class CadastroComponent implements OnInit {
 
   handleCadastrarUsuario() {
     if (this.formCadastro.valid) {
-      console.log(this.formCadastro.value, 'form valido');
       this.formCadastro.reset();
     }
     else {
-      console.log(this.formCadastro.value, 'FORM INVALIDO');
       this.validarTodosOsCamposDoFormulario(this.formCadastro);
     }
   }
