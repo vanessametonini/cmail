@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { HttpClient, HttpResponseBase } from '@angular/common/http';
 import { map, catchError } from "rxjs/operators";
+import { User } from "../../models/user";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-cadastro',
@@ -18,7 +20,8 @@ export class CadastroComponent implements OnInit {
     avatar: new FormControl('', [Validators.required], this.validaImagem.bind(this))
   })
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient
+              ,private roteador: Router){}
 
   ngOnInit() {}
 
@@ -74,7 +77,27 @@ export class CadastroComponent implements OnInit {
 
   handleCadastrarUsuario() {
     if (this.formCadastro.valid) {
-      this.formCadastro.reset();
+
+      // const userData = {...this.formCadastro.value, ...{
+      //   name: this.formCadastro.get('nome').value,
+      //   phone: this.formCadastro.get('telefone').value
+      // }}
+
+      const userData = new User(this.formCadastro.value);
+
+      this.httpClient
+          .post('http://localhost:3200/users',userData)
+          .subscribe(
+            () => {
+              console.log(`Cadastrado com sucesso`);
+              this.formCadastro.reset()
+
+              setTimeout(() => {
+                this.roteador.navigate(['']);
+              }, 1000);
+            }
+            ,erro => console.error(erro)
+          )
     }
     else {
       this.validarTodosOsCamposDoFormulario(this.formCadastro);
