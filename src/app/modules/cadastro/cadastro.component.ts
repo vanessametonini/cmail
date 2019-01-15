@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators, AsyncValidatorFn, AbstractControl } from '@angular/forms';
-import { HttpClient, HttpResponseBase } from '@angular/common/http';
+import { FormGroup, FormControl, Validators, AsyncValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
+import { HttpClient, HttpResponseBase, HttpHeaders } from '@angular/common/http';
 import { map, catchError, flatMap, switchMap } from "rxjs/operators";
 import { Observable } from 'rxjs';
 
@@ -21,75 +21,57 @@ export class CadastroComponent implements OnInit {
       username: new FormControl('', [Validators.required]),
       senha: new FormControl('', [Validators.required]),
       telefone: new FormControl('', [Validators.required, Validators.pattern('[0-9]{4}-?[0-9]{4}[0-9]?')]),
-      avatar: new FormControl('', [], this.validaImagem())
+      avatar: new FormControl('',[], this.validaImagem())
     })
   }
 
-  validaImagem() {
+  validaImagem(): AsyncValidatorFn {
 
-    return (campoDoFormulario: AbstractControl) => {
+    return (campoDoFormulario: AbstractControl): Observable<ValidationErrors> => {
 
-      let resultado;
+      if (!campoDoFormulario.value) return new Observable<null>();
 
-      return campoDoFormulario
-        .valueChanges
-        .subscribe(
-          campoValue => {
-            resultado = this
-                        .httpClient
-                        .get(campoValue, {observe: 'response'}
-                        )
-                        .pipe(
-                          map(response => {
-                            return response.ok ? null : { urlInvalida: true }
-                          })
-                        )
-          }
+      return this
+        .httpClient
+        .head(campoDoFormulario.value, { observe: 'response' })
+        .pipe(
+          map((response: HttpResponseBase) => {
+            console.log(response);
+            return response.ok
+              ? null
+              : { urlInvalida: true, statusText: response.statusText }
+          })
+          ,
+          catchError((error) => {
+            console.log(error);
+            return [{ urlInvalida: true, statusText: error.statusText }]
+          })
         )
     }
-
-    //if (!campoDoFormulario.valid) return new Observable<null>()
-
-    // return this
-    //       .httpClient
-    //       .head(
-    //         campoDoFormulario.value
-    //         ,{ observe: "response" }
-    //       )
-    //       .pipe(
-    //         map((response: HttpResponseBase) => {
-    //           console.log(response);
-    //           return response.ok ? null : { urlInvalida: true }
-    //         })
-    //         , catchError((error) => {
-    //           console.log(error);
-    //           return [{ urlInvalida: true }]
-    //         })
-    //       )
   }
 
-validarTodosOsCamposDoFormulario(form: FormGroup) {
-  // for(let field in form.controls){
-  //   const campo = form.get(field);
-  //   campo.markAsTouched({ onlySelf: true });
-  // }
+  validarTodosOsCamposDoFormulario(form: FormGroup) {
+    // for(let field in form.controls){
+    //   const campo = form.get(field);
+    //   campo.markAsTouched({ onlySelf: true });
+    // }
 
-  Object.keys(form.controls).forEach(field => {
-    const control = form.get(field);
-    control.markAsTouched({ onlySelf: true });
-  });
+    Object.keys(form.controls).forEach(field => {
+      const control = form.get(field);
+      control.markAsTouched({ onlySelf: true });
+    });
 
-}
-
-handleCadastrarUsuario() {
-  if (this.formCadastro.valid) {
-    console.log(this.formCadastro.value, 'form valido');
-    this.formCadastro.reset();
   }
-  else {
-    console.log(this.formCadastro.value, 'FORM INVALIDO');
-    this.validarTodosOsCamposDoFormulario(this.formCadastro);
+
+  handleCadastrarUsuario() {
+    if (this.formCadastro.valid) {
+      console.log(this.formCadastro.value, 'form valido');
+      this.formCadastro.reset();
+    }
+    else {
+      console.log(this.formCadastro.value, 'FORM INVALIDO');
+      this.validarTodosOsCamposDoFormulario(this.formCadastro);
+    }
   }
-}
 
 }
