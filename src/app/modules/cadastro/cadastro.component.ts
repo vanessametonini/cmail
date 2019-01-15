@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators, AsyncValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
-import { HttpClient, HttpResponseBase, HttpHeaders } from '@angular/common/http';
-import { map, catchError, flatMap, switchMap } from "rxjs/operators";
-import { Observable } from 'rxjs';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { HttpClient, HttpResponseBase } from '@angular/common/http';
+import { map, catchError } from "rxjs/operators";
 
 @Component({
   selector: 'app-cadastro',
@@ -21,34 +20,46 @@ export class CadastroComponent implements OnInit {
       username: new FormControl('', [Validators.required]),
       senha: new FormControl('', [Validators.required]),
       telefone: new FormControl('', [Validators.required, Validators.pattern('[0-9]{4}-?[0-9]{4}[0-9]?')]),
-      avatar: new FormControl('',[], this.validaImagem())
+      avatar: new FormControl('',[Validators.required], this.validaImagem.bind(this))
     })
   }
 
-  validaImagem(): AsyncValidatorFn {
-
-    return (campoDoFormulario: AbstractControl): Observable<ValidationErrors> => {
-
-      if (!campoDoFormulario.value) return new Observable<null>();
-
-      return this
-        .httpClient
-        .head(campoDoFormulario.value, { observe: 'response' })
-        .pipe(
-          map((response: HttpResponseBase) => {
-            console.log(response);
-            return response.ok
-              ? null
-              : { urlInvalida: true, statusText: response.statusText }
-          })
-          ,
-          catchError((error) => {
-            console.log(error);
-            return [{ urlInvalida: true, statusText: error.statusText }]
-          })
-        )
-    }
+  validaImagem(campoDoFormulario: FormControl) {
+    return this.httpClient
+            .head(campoDoFormulario.value, {
+              observe: 'response'
+            })
+            .pipe(
+              map((response: HttpResponseBase) => {
+                return response.ok ? null : { urlInvalida: true }
+              }),
+              catchError((error) => {
+                return [{ urlInvalida: true }]
+              })
+            )
   }
+
+  // validaImagem() {
+
+  //   return (campoDoFormulario) => {
+  //     return this
+  //             .httpClient
+  //             .head(campoDoFormulario.value, { observe: 'response' })
+  //             .pipe(
+  //               map((response: HttpResponseBase) => {
+  //                 console.log(response);
+  //                 return response.ok
+  //                   ? null
+  //                   : { urlInvalida: true, statusText: response.statusText }
+  //               })
+  //               ,
+  //               catchError((error) => {
+  //                 console.log(error);
+  //                 return [{ urlInvalida: true, statusText: error.statusText }]
+  //               })
+  //             )
+  //   }
+  // }
 
   validarTodosOsCamposDoFormulario(form: FormGroup) {
     // for(let field in form.controls){
