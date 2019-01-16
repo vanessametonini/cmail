@@ -7,7 +7,12 @@ export class AuthGuard implements CanActivate {
 
   constructor(private roteador: Router){}
 
-  canActivate(): boolean {
+  canActivate(
+      rotaAtual: ActivatedRouteSnapshot
+      ,state: RouterStateSnapshot
+    )
+    : Observable<boolean> | boolean {
+
       if(localStorage.getItem('TOKEN')){
         return true;
       }
