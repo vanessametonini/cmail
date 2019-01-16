@@ -13,7 +13,7 @@ export class LoginService {
     return this.http
                 .post(this.api, dadosLogin)
                 .pipe(
-                  map( response => {
+                  map( (response: any) => {
                     localStorage.setItem('TOKEN', response.token);
                     return response;
                   })
