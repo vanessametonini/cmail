@@ -1,3 +1,43 @@
-<p>
-  login works!
-</p>
+<div class="mdl-layout mdl-js-layout">
+  <main class="mdl-layout__content">
+    <div class="page-content">
+      <div class="mdl-grid">
+        <article class="demo-card-wide mdl-card mdl-shadow--2dp">
+          <header class="mdl-card__title">
+            <h1 class="mdl-card__title-text">Bem vindos/as ao CMail!</h1>
+          </header>
+          <form autocomplete="off" class="mdl-card__supporting-text">
+
+            <!-- aqui os campos do formulário -->
+            <cmail-form-group>
+              <input type="email" name="email" cmailFormField required autofocus>
+              <span class="mdl-textfield__error" *ngIf="false">
+                Informar um email é obrigatório!
+              </span>
+            </cmail-form-group>
+
+            <cmail-form-group>
+              <input type="password" name="senha" cmailFormField required autofocus>
+              <span class="mdl-textfield__error" *ngIf="false">
+                Informar uma senha é obrigatória!
+              </span>
+            </cmail-form-group>
+
+            <div *ngIf="false">
+              <span class="mdl-textfield__error" *ngIf="false">
+                Senha ou email inválidos
+              </span>
+            </div>
+
+            <div class="mdl-card__actions mdl-card--border">
+              <button type="submit" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+                Entrar
+              </button>
+            </div>
+
+          </form>
+        </article>
+      </div>
+    </div>
+  </main>
+</div>
