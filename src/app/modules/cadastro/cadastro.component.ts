@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { HttpClient, HttpResponseBase } from '@angular/common/http';
+import { HttpClient, HttpResponseBase, HttpErrorResponse } from '@angular/common/http';
 import { map, catchError } from "rxjs/operators";
 import { User } from "../../models/user";
 import { Router } from '@angular/router';
@@ -19,6 +19,8 @@ export class CadastroComponent implements OnInit {
     telefone: new FormControl('', [Validators.required, Validators.pattern('[0-9]{4}-?[0-9]{4}[0-9]?')]),
     avatar: new FormControl('', [Validators.required], this.validaImagem.bind(this))
   })
+
+  mensagensErro;
 
   constructor(private httpClient: HttpClient
               ,private roteador: Router){}
@@ -88,15 +90,19 @@ export class CadastroComponent implements OnInit {
       this.httpClient
           .post('http://localhost:3200/users',userData)
           .subscribe(
-            () => {
+            (response) => {
               console.log(`Cadastrado com sucesso`);
+              console.log(response);
+
               this.formCadastro.reset()
 
               setTimeout(() => {
                 this.roteador.navigate(['']);
               }, 1000);
             }
-            ,erro => console.error(erro)
+            ,(responseError: HttpErrorResponse) => {
+              this.mensagensErro = responseError.error.body
+            }
           )
     }
     else {

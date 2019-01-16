@@ -21,3 +21,11 @@
 .demo-card-wide>.mdl-card__menu {
   color: #fff;
 }
+
+.mdl-card__actions {
+  margin-top: 25px;
+}
+
+.mdl-button.entrar {
+  float: right;
+}

@@ -3,6 +3,7 @@ import { LoginComponent } from './login.component';
 import { LoginRoutingModule } from './login-routing.module';
 import { CommonModule } from '@angular/common';
 import { CmailFormModule } from 'src/app/components/cmail-form-group/cmail-form.module';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -12,7 +13,8 @@ import { CmailFormModule } from 'src/app/components/cmail-form-group/cmail-form.
   ,imports: [
     CommonModule,
     LoginRoutingModule,
-    CmailFormModule
+    CmailFormModule,
+    FormsModule
   ]
   ,exports: [
     LoginComponent

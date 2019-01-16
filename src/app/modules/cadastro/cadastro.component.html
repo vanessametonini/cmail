@@ -3,6 +3,13 @@
   <main class="mdl-layout__content">
     <div class="page-content">
       <div class="mdl-grid">
+
+        <ul *ngIf="mensagensErro" class="mdl-textfield is-invalid">
+          <li *ngFor="let erro of mensagensErro" class="mdl-textfield__error">
+            {{erro.message}}: {{erro.value}}
+          </li>
+        </ul>
+
         <form [formGroup]="formCadastro" (ngSubmit)="handleCadastrarUsuario()" autocomplete="off">
 
           <cmail-form-group [campo]="formCadastro.get('nome')">
