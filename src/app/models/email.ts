@@ -1,13 +1,22 @@
 export class Email {
 
-  to = '';
-  subject = '';
-  content = '';
+  destinatario = '';
+  assunto = '';
+  conteudo = '';
+  dataDeEnvio = '';
 
-  constructor(email?: { destinatario, assunto, conteudo}){
-    this.to = email.destinatario;
-    this.subject = email.assunto;
-    this.content = email.conteudo;
+  constructor (
+    { destinatario, assunto, conteudo, dataDeEnvio}:
+      { destinatario: string, assunto: string, conteudo: string, dataDeEnvio: string }
+    ){
+    this.destinatario = destinatario;
+    this.assunto = assunto;
+    this.conteudo = conteudo;
+    this.dataDeEnvio = dataDeEnvio;
+  }
+
+  get introducaoDoConteudo() {
+    return this.conteudo.substr(0, 140) + '...'
   }
 
 }

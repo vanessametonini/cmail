@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'cmail-list-item',
@@ -7,7 +7,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CmailListItemComponent implements OnInit {
 
-  constructor() { }
+  @Input() destinatario = '';
+  @Input() assunto = '';
+  @Input() introducaoDoConteudo = '';
+  @Input() dataDeEnvio = '';
+
+  constructor() {}
 
   ngOnInit() {}
 
