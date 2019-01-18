@@ -3,6 +3,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { NgForm } from '@angular/forms';
 import { LoginService } from 'src/app/services/login.service';
 import { Router } from '@angular/router';
+import { PageDataService } from 'src/app/services/page.service';
 
 @Component({
   selector: 'app-login',
@@ -15,9 +16,13 @@ export class LoginComponent implements OnInit {
   login = {email: '', password: ''};
 
   constructor(private loginService: LoginService
-              ,private roteador: Router ) { }
+              ,private roteador: Router
+              ,private pageDataService: PageDataService ) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.pageDataService
+      .defineTitulo('Login - CMail');
+  }
 
   handleLogin(formLogin: NgForm){
 

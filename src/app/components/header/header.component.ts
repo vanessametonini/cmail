@@ -1,4 +1,5 @@
 import { Component } from "@angular/core";
+import { PageDataService } from 'src/app/services/page.service';
 
 @Component({
     selector: 'cmail-header',
@@ -9,7 +10,18 @@ import { Component } from "@angular/core";
     ]
 })
 export class HeaderComponent {
-    private _isMenuOpen = false
+    private _isMenuOpen = false;
+    tituloDaPagina = 'CMail';
+
+    constructor(private pageService: PageDataService){
+      this.pageService
+        .titulo
+        .subscribe(
+          novoTitulo => {
+            this.tituloDaPagina = novoTitulo
+            console.log(this.tituloDaPagina);
+          });
+    }
 
     get isMenuOpen() {
         return this._isMenuOpen
@@ -19,4 +31,4 @@ export class HeaderComponent {
         this._isMenuOpen = !this.isMenuOpen
     }
 
-} 
+}
