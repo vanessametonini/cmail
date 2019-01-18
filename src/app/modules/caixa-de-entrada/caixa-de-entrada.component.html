@@ -5,7 +5,7 @@
 
       <div class="mdl-grid">
         <ul>
-          <li *ngFor="let email of emailList">
+          <li *ngFor="let email of emailList | filtroPorAssunto:termoParaFiltro">
             <cmail-list-item
               [destinatario]="email.destinatario"
               [assunto]="email.assunto"

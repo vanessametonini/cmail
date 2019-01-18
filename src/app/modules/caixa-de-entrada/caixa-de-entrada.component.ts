@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { EmailService } from 'src/app/services/email.service';
 import { PageDataService } from 'src/app/services/page.service';
+import { HeaderDataService } from 'src/app/services/header.service';
 
 @Component({
   selector: 'cmail-caixa-de-entrada',
@@ -20,9 +21,11 @@ export class CaixaDeEntradaComponent implements OnInit{
 
   emailList = [];
   email = { destinatario: '', assunto: '', conteudo: ''};
+  termoParaFiltro = '';
 
   constructor(private emailService: EmailService,
-              private pageDataService: PageDataService) {}
+              private pageDataService: PageDataService,
+              private headerService: HeaderDataService) {}
 
   ngOnInit(){
     this.emailService
@@ -34,6 +37,10 @@ export class CaixaDeEntradaComponent implements OnInit{
 
     this.pageDataService
         .defineTitulo('Caixa de entrada - CMail');
+
+    this.headerService
+        .valorDoFiltro
+        .subscribe(novoValor => this.termoParaFiltro = novoValor)
   }
 
   get isNewEmailFormOpen() {
@@ -59,6 +66,20 @@ export class CaixaDeEntradaComponent implements OnInit{
           }
           ,erro => console.error(erro)
         )
+  }
+
+  handleRemoveEmail(eventoVaiRemover, emailId) {
+    if (eventoVaiRemover.status === 'removing') {
+      this.emailService
+        .deletar(emailId)
+        .subscribe(
+          res => {
+            console.log(res);
+            this.emailList = this.emailList.filter(email => email.id != emailId);
+          }
+          , err => console.error(err)
+        )
+    }
   }
 
 }

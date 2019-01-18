@@ -8,11 +8,13 @@ import { CaixaDeEntradaComponent } from './modules/caixa-de-entrada/caixa-de-ent
 import { ModuloRoteamento } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { SharedComponentModule } from './components/shared-components.module';
+import { FiltroPorAssunto } from './modules/caixa-de-entrada/filtro-por-assunto.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
-    CaixaDeEntradaComponent
+    CaixaDeEntradaComponent,
+    FiltroPorAssunto
   ],
   imports: [
     BrowserModule,
