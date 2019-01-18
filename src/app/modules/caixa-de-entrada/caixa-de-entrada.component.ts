@@ -51,6 +51,16 @@ export class CaixaDeEntradaComponent implements OnInit{
     this._isNewEmailFormOpen = !this.isNewEmailFormOpen
   }
 
+  filtrarEmailsPorAssunto() {
+    const termoParaFiltroEmMinusculo = this.termoParaFiltro.toLowerCase();
+
+    return this.emailList.filter( email => {
+      const assunto = email.assunto.toLowerCase()
+      return assunto.includes(termoParaFiltroEmMinusculo)
+    })
+
+  }
+
   handleNewEmail(formEmail: NgForm) {
 
     if (formEmail.invalid) return;
